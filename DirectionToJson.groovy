@@ -36,11 +36,9 @@ class CoordCalculator{
     def direction =[:];
     
     http.get(path:path['direction'], query:query){ resp, json ->
-      println resp.status
-      json.each{ 
-	println it.key + ' : ' + it.value
-      }
-      direction = parser.parseText(json);
+      //println resp.status
+      //  direction = parser.parseText(json);
+      direction = json;
     }
 
     return direction;
@@ -66,4 +64,10 @@ class CoordCalculator{
 
 
 CoordCalculator calc = new CoordCalculator();
-println calc.execute();
+def root = calc.execute();
+root.routes.legs.each{ leg ->
+  leg.steps.each{ step ->
+    println step.start_location.lat
+    println step.start_location.lng
+  }
+};
